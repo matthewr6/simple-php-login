@@ -1,4 +1,5 @@
 <?php 
+	require "connect.php";  //connect and session_start() should be up here
 	
 	$taken = FALSE;
 	$length = FALSE;
@@ -44,8 +45,7 @@
 			$hashedPassword = password_hash(mysqli_real_escape_string($connection, $_POST['password']), PASSWORD_DEFAULT);
 			$key = $username . hash("sha512", uniqid($username, true));
 			
-			//username, password, email, login key, date, IP address, rank/title/whatever
-			//Ranks:  rank1, rank2, etc.
+			//Can edit this to your preference.  Just keep the username, password, and user_key - those are the important ones!
 			$query = "
 				INSERT INTO user_data (username, password, email, user_key, date, ip, rank) 
 				VALUES ('$username', '$hashedPassword', '$email', '$key', CURDATE(), '" . $_SERVER['REMOTE_ADDR'] . "', 'rank')
@@ -53,8 +53,8 @@
 			mysqli_query($connection, $query);
 			
 			//send registration mail
-			$subject = '';
-			$message = '';
+			$subject = '';  //whatever you want
+			$message = '';  //whatever you want
 			mail($email, $subject, $message);
 		}
 	}
