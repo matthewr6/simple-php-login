@@ -47,9 +47,12 @@
 		
 		if (!$taken && $goodEmail && $passCheck && $goodUsername && !$is_bot && isset($_SESSION['init_time'])) {
 			//all is good, so register!
-			$email = mysqli_real_escape_string($connection, $_POST['email']);
-			$hashedPassword = password_hash(mysqli_real_escape_string($connection, $_POST['password']), PASSWORD_DEFAULT);
-			$key = $username . hash("sha512", uniqid($username, true));
+			
+			$email = mysqli_real_escape_string($connection, $_POST['email']);  //email...
+			
+			$hashedPassword = password_hash(mysqli_real_escape_string($connection, $_POST['password']), PASSWORD_DEFAULT);  //hash the password
+			
+			$key = $username . hash("sha512", uniqid($username, true));  //generate a unique key for login
 			
 			//Can edit this to your preference.  Just keep the username, password, and user_key - those are the important ones!
 			$query = "
