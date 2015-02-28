@@ -1,5 +1,5 @@
 <?php 
-	require "connect.php";  //connect and session_start() should be up here
+	require "connect.php";
 	
 	$taken = FALSE;
 	$length = FALSE;
@@ -11,34 +11,40 @@
 	
 	$is_bot = false;
 	
-	$min_time = 1.5
+	$min_time = 1.5;  //minimum time before human confirmation
 	
-	if (empty($_POST)) {
-		$_SESSION['init_time'] = time();
+	if (empty($_POST)) {  //first registration request...
+		$_SESSION['init_time'] = time();  //so set the beginning time
 	} else {
 		//check if enough time has passed
-		$timediff = time() - $_SESSION['init_time'];
+		$timediff = time() - $_SESSION['init_time'];  //find the difference in times
 		if ($timediff <= $min_time) {  //time diff is too small!
-			$is_bot = true;
+			$is_bot = true;  //uh-oh, you're a bot!
 		}
 	}
 	
-	if (isset($_POST['username'], $_POST['password'], $_POST['password_check'], $_POST['email'])) {
-		$username = mysqli_real_escape_string($connection, $_POST['username']);
+	if (isset($_POST['username'], $_POST['password'], $_POST['password_check'], $_POST['email'])) {  //everything is set...
+		$username = mysqli_real_escape_string($connection, $_POST['username']);  //no SQL injection
+		
 		$query = "SELECT username FROM user_data WHERE username='$username'";
-		$result = mysqli_query($connection, $query);
+		$result = mysqli_query($connection, $query);  //get username list for checking
+		
 		if (mysqli_num_rows($result) > 0) {
-			$taken = TRUE;
+			$taken = TRUE;  //you don't want a taken username!
 		}
+		
 		if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$goodEmail = TRUE;
+			$goodEmail = TRUE;  //validate email
 		}
+		
 		if ($_POST['password'] == $_POST['password_check'] && strlen($_POST['password']) > $minPasswordLength) {
-			$passCheck = TRUE;
+			$passCheck = TRUE;  //good password...
 		}
+		
 		if (strlen($_POST['username']) <= $maxUsernameLength && preg_match('/^[a-zA-Z0-9_-]*$/', $username)) {
-			$goodUsername = TRUE;
+			$goodUsername = TRUE;  //good username - length AND content!  (alphanumaric, _, and -)
 		}
+		
 		if (!$taken && $goodEmail && $passCheck && $goodUsername && !$is_bot && isset($_SESSION['init_time'])) {
 			//all is good, so register!
 			$email = mysqli_real_escape_string($connection, $_POST['email']);
