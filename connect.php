@@ -2,10 +2,10 @@
   
   session_start();
   
-  $servername = '';
-  $username = '';
-  $password = '';
-  $dbname = '';
+  $servername = '';  //servername
+  $username = '';  //username
+  $password = '';  //password
+  $dbname = '';  //database name
   
   $connection = mysqli_connect($servername, $username, $password, $dbname);
   //closing tag not here intentionally!
