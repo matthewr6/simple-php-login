@@ -9,3 +9,4 @@ The `login_status.php` file creates a variable called `$is_logged_in`, which sim
 * `$is_logged_in` - determines whether a user is logged in
 * `$_SESSION['username']` - user's username
 * `$connection` - connection to database
+* `$_COOKIE['key']` - user's unique, mutating login ID
