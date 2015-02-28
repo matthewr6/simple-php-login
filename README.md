@@ -6,6 +6,6 @@ Preferably, the three scripts should all be in the same file, with the connectio
 The `login_status.php` file creates a variable called `$is_logged_in`, which simply signifies whether the user is logged in or not.  The user's username is stored in `$_SESSION['username']`.
 
 # Variables
-`$is_logged_in` - determines whether a user is logged in
-`$_SESSION['username']` - user's username
-`$connection` - connection to database
+* `$is_logged_in` - determines whether a user is logged in
+* `$_SESSION['username']` - user's username
+* `$connection` - connection to database
